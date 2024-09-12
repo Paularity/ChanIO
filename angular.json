@@ -15,11 +15,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/ChanIO/",
             "outputPath": "dist/chan-io",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -41,23 +42,21 @@
           },
           "configurations": {
             "production": {
-              "baseHref": "/ChanIO/",
-              "outputHashing": "all",
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2MB",
-                  "maximumError": "3MB"
+                  "maximumWarning": "3MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kB",
                   "maximumError": "4kB"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
-              "baseHref": "/",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -89,7 +88,7 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
+            "assets": [              
               {
                 "glob": "**/*",
                 "input": "public"
