@@ -3,7 +3,7 @@ name: Deploy Angular to GitHub Pages
 on:
   push:
     branches:
-      - master  # Trigger the workflow on push to the main branch
+      - masterX  # Trigger the workflow on push to the main branch
 
 jobs:
   build:
@@ -27,6 +27,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }} # Use the personal access token secret
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist/chan-io/browser
 
