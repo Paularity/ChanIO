@@ -1,1 +1,86 @@
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/layout.scss";
+
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+/* Custom Styles */
+.container {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// REGION PRIME_NG_CUSTOM_STYLES
+
+.p-float-label input:focus~label,
+.p-float-label input.p-filled~label,
+.p-float-label textarea:focus~label,
+.p-float-label textarea.p-filled~label,
+.p-float-label .p-inputwrapper-focus~label,
+.p-float-label .p-inputwrapper-filled~label {
+  left: 0;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
+  text-align: start;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+  font-size: 14px;
+}
+
+.p-autocomplete.p-component.p-inputwrapper {
+  width: 100%;
+}
+
+.p-datatable.p-datatable-sm .p-datatable-tbody>tr>td {
+  padding: 0 5px;
+}
+
+/* END PRIME_NG_CUSTOM_STYLES */
+
+
+// REGION CUSTOM_STYLES
+body {
+  margin-bottom: 50px;
+}
+
+
+// END CUSTOM_STYLES

@@ -1,7 +1,86 @@
-<div>
-  <input [(ngModel)]="username" placeholder="Username" />
-  <input [(ngModel)]="password" placeholder="Password" type="password" />
-  <button (click)="login()">Login</button>
+<app-loader [isLoading]="!opacity" />
+<div class="login" [ngStyle]="{ opacity: opacity }">
+  <div class="login-image">
+    <!-- <img class="mandrel" src="/assets/Content/images/mandrel.jpg" /> -->
+  </div>
+  <div class="login-container">
+    <div class="watermark">Portfolio App</div>
+    <div class="login-invalid-msgs" *ngIf="errorMessages.length > 0">
+      <p-messages
+        [(value)]="errorMessages"
+        [enableService]="false"
+        [closable]="false"
+      />
+    </div>
+    <!-- <img src="/images/logo-small.png" class="brand-logo" /> -->
+    <h2 class="mb-0" style="margin-top: 50px">Welcome!</h2>
+    <p class="mb-0 ml-2"><small>Please Enter your Account details</small></p>
+    <!-- <hr> -->
+    <form
+      class="form-group"
+      [formGroup]="loginForm"
+      (ngSubmit)="onLogin()"
+      class="mt-5"
+    >
+      <div class="flex flex-column gap-4 mb-3">
+        <div class="flex flex-column" style="height: 50px">
+          <p-floatLabel>
+            <input
+              id="username"
+              type="text"
+              placeholder=""
+              pInputText="w-full"
+              formControlName="username"
+              class="ng-invalid ng-dirty"
+              [ngClass]="{ 'ng-invalid': submitted && f.username.errors }"
+            />
+            <label for="username">Username</label>
+          </p-floatLabel>
 
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+          <ng-container *ngIf="submitted && f.username.errors">
+            <small *ngIf="f.username.errors.required" class="error"
+              >Username is required</small
+            >
+          </ng-container>
+        </div>
+
+        <div class="flex flex-column" style="height: 37px">
+          <p-floatLabel>
+            <p-password
+              formControlName="password"
+              id="password"
+              placeholder=""
+              [toggleMask]="true"
+              [feedback]="false"
+              class="ng-invalid ng-dirty"
+              [ngClass]="{ 'ng-invalid': submitted && f.password.errors }"
+            ></p-password>
+            <label for="password">Password</label>
+          </p-floatLabel>
+          <ng-container *ngIf="submitted && f.password.errors">
+            <small *ngIf="f.password.errors.required" class="error"
+              >Password is required</small
+            >
+          </ng-container>
+        </div>
+      </div>
+      <button
+        pButton
+        pRipple
+        [loading]="loading"
+        label="Login To Continue"
+        class="p-button-contrast w-full mt-5"
+        icon="pi pi-sign-in"
+        type="submit"
+      ></button>
+      <div
+        class="flex flex-row justify-content-around align-items-center mt-5 flex-wrap"
+      >
+        <p class="text-muted mb-0"><small>Don't you have an account?</small></p>
+        <a pButton label="Register" [text]="true" href="#"></a>
+      </div>
+    </form>
+    <div class="footer">Copyright © 2025 &nbsp; <a href="https://github.com/Paularity" target="_blank" rel="noopener noreferrer">Paularity</a></div>
+  </div>
 </div>
+

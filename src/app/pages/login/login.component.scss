@@ -1,0 +1,205 @@
+::ng-deep html,
+::ng-deep body {
+  height: 100%;
+  margin: 0;
+}
+
+::ng-deep body {
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 800px) {
+  div.login-image {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 535px) {
+  .login {
+    width: 100%;
+  }
+  .login-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
+// ::ng-deep div.login-invalid-msgs span.p-message-detail {
+//   text-wrap: wrap;
+//   max-width: 300px;
+// }
+
+.login {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  margin-top: 350px;
+  // width: 60vw;
+  min-width: 500px;
+  transition: 600ms;
+}
+
+.watermark {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-weight: 600;
+  opacity: 0.3;
+  font-style: italic;
+}
+
+.login-invalid-msgs {
+  position: absolute;
+  top: 46px;
+  left: 25px;
+  width: 85%;
+  text-wrap: wrap;
+}
+
+.login-image {
+  // background: #000046;
+  // background: linear-gradient(to right, #777d99, rgba(0, 0, 0, 0.06));
+  background: url(/images/login-bg.jpg) right / cover;
+  background-position-x: 51rem;
+  border-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9)) fill 0;
+
+  width: 600px;
+  height: 600px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+
+  & img.mandrel {
+    mix-blend-mode: multiply;
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+.login-container {
+  position: relative;
+  width: 500px;
+  max-width: 500px;
+  min-width: 500px;
+  padding: 40px 100px 40px 60px;
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  margin: auto;
+  justify-content: center;
+
+  & p.login-header {
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 24px;
+    color: #0178d4;
+  }
+}
+
+::ng-deep input,
+::ng-deep .p-password {
+  width: 100%;
+}
+
+// old design
+
+.main-div {
+  height: 40vh;
+  justify-content: center;
+  align-items: center;
+}
+
+:host {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-div {
+  display: flex;
+  flex-direction: column;
+  width: 25em;
+}
+.login-card {
+  margin-top: -50em;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  width: 25em;
+  height: 17em;
+}
+
+.login-card input {
+  margin: 10px 0;
+  width: 100%;
+  background-color: #e2e2e2;
+  border: none;
+  outline: none;
+  padding: 12px 12px;
+  border-radius: 4px;
+}
+
+.login-card button {
+  margin: 10px 0;
+  background-color: #4796ff;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  padding: 8px 15px;
+  width: 100%;
+}
+
+.card-title h1 {
+  font-size: 20px;
+  font-weight: bold;
+  color: dimgrey;
+}
+
+.error {
+  font-size: 12px;
+  color: rgb(252, 117, 117);
+  width: inherit;
+  word-break: break-all;
+}
+
+.footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  left: 0;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.refresh-pass {
+  border-radius: 1em;
+  border-style: solid;
+  border-color: rgb(245, 249, 182);
+  border-width: 0.2em;
+  background-color: rgba(249, 248, 189, 0.2);
+  width: 95%;
+  padding-left: 2em;
+  margin: 1em 3em 1em 3em;
+}
+
+.brand-logo {
+  width: 85px;
+  position: absolute;
+  top: 15px;
+  left: 10px;
+}
