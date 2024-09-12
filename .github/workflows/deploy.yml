@@ -29,5 +29,4 @@ jobs:
       with:
         github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }} # Use the personal access token secret
         publish_dir: ./dist/chan-io # Replace "chan-io" with your actual Angular project build directory
-Key changes:
 
