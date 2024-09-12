@@ -203,3 +203,22 @@
   top: 15px;
   left: 10px;
 }
+
+
+
+.lightning-border {
+  // border: 2px solid yellow; // Yellow border for lightning effect
+  // Glow animation on the border
+  animation: border-glow 1.5s infinite alternate;
+  // Optional: Text glow (subtle)
+}
+
+// Keyframe for the glowing border effect
+@keyframes border-glow {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 255, 0, 0.3), 0 0 10px rgba(255, 255, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.5), 0 0 20px rgba(255, 255, 0, 0.4);
+  }
+}
