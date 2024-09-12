@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "chan-io:build:production"
+              "buildTarget": "chanIO:build:production"
             },
             "development": {
-              "buildTarget": "chan-io:build:development"
+              "buildTarget": "chanIO:build:development"
             }
           },
           "defaultConfiguration": "development"
