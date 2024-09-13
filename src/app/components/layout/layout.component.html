@@ -26,7 +26,7 @@
     <p-dialog
       [(visible)]="displayFinder"
       [breakpoints]="{ '960px': '50vw' }"
-      [draggable]="false"
+      [draggable]="true"
       [resizable]="false"
     >
       <p-tree [value]="nodes" />
@@ -37,7 +37,7 @@
       [(visible)]="displayTerminal"
       [breakpoints]="{ '960px': '50vw' }"
       [style]="{ width: '30vw' }"
-      [draggable]="false"
+      [draggable]="true"
       [resizable]="false"
     >
       <p-terminal

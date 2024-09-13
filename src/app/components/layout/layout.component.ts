@@ -52,9 +52,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     this.statusMessage = 'Booting up machine...';
     this.dockItems = [
       {
-        label: 'Finder',
+        label: 'Paularity',
         tooltipOptions: {
-          tooltipLabel: 'Finder',
+          tooltipLabel: 'Paularity',
           tooltipPosition: 'top',
           positionTop: -15,
           positionLeft: 15,
@@ -166,7 +166,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
     this.menubarItems = [
       {
-        label: 'Finder',
+        label: 'Paularity',
         styleClass: 'menubar-root',
       },
       {
