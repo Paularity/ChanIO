@@ -7,12 +7,13 @@ import { NodeService } from '../../services/dock/node/node.service';
 import { PhotosService } from '../../services/dock/photos/photos.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
+import { AppLoaderComponent } from '../app-loader/app-loader.component';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  imports: [CommonModule, PrimengModules],
+  imports: [CommonModule, PrimengModules, AppLoaderComponent],
   providers: [MessageService, TerminalService, PhotosService, NodeService],
   standalone: true,
 })
@@ -35,6 +36,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   subscription: Subscription | undefined;
 
+  isLoading = false;
+  statusMessage = '';
+
   constructor(
     private galleriaService: PhotosService,
     private nodeService: NodeService,
@@ -44,6 +48,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
+    this.statusMessage = 'Booting up machine...';
     this.dockItems = [
       {
         label: 'Finder',
@@ -303,6 +309,11 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
     this.galleriaService.getImages().then((data) => (this.images = data));
     this.nodeService.getFiles().then((data) => (this.nodes = data));
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
+    
   }
 
   commandHandler(text: any) {
