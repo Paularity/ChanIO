@@ -168,6 +168,10 @@
       const clickSound = document.getElementById('clickSound');
       const playButton = document.getElementById('playSound');
 
+      thunderSound.volume = 0.03;
+      clickSound.volume = 0.03;
+      playButton.volume = 0.03;
+
       playButton.addEventListener('click', () => {
         // Play the thunder sound when the button is clicked
         thunderSound.play();
