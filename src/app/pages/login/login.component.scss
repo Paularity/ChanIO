@@ -5,9 +5,10 @@
 }
 
 ::ng-deep body {
-  background-image: linear-gradient(to right, #434343 0%, black 100%);
-  background-size: cover;
-  background-repeat: no-repeat;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 800px) {
@@ -93,6 +94,7 @@
   height: 600px;
   margin: auto;
   justify-content: center;
+  background-color: #191919;
 
   & p.login-header {
     margin-bottom: 0;
