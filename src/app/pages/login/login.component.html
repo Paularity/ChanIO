@@ -2,14 +2,13 @@
 <iframe
   src="html/tesla.html"
   frameborder="0"
-  style="position: absolute; width: 100vw; z-index: -1; height: 140vh"
+  style="position: absolute; width: 100vw; z-index: 1; height: 140vh" allow="autoplay"
 ></iframe>
-<div class="login lightning-border" [ngStyle]="{ opacity: opacity }">
+<div class="login lightning-border" [ngStyle]="{ opacity: opacity }" style="z-index: 2;">
   <div class="login-image">
-    <!-- <img class="mandrel" src="/assets/Content/images/mandrel.jpg" /> -->
   </div>
   <div class="login-container">
-    <div class="watermark">Portfolio App</div>
+    <!-- <div class="watermark">Portfolio App</div> -->
     <div class="login-invalid-msgs" *ngIf="errorMessages.length > 0">
       <p-messages
         [(value)]="errorMessages"
