@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realistic Thunderbolt Zaps</title>
+    <style>
+      body {
+        overflow: hidden;
+        margin: 0;
+        background-image: linear-gradient(to right, #434343 0%, black 100%);
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .tesla-container {
+        height: 100vh;
+        background-color: #111;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+
+      .svg-container {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+      }
+
+      .lightning {
+        stroke: #f5f5a6; /* Softer, more muted yellow */
+        stroke-width: 2; /* Default stroke width */
+        fill: none;
+        opacity: 0.8;
+        animation: flicker 0.5s linear forwards; /* Extended flicker duration */
+        filter: url(#glow); /* Apply the glow filter */
+      }
+
+      @keyframes flicker {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tesla-container">
+      <svg width="0" height="0">
+        <defs>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" /> <!-- Increased blur for more glow -->
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
+    </div>
+
+    <script>
+      document.addEventListener("click", function (e) {
+        createThunderbolts(e.pageX, e.pageY, 2); // Create 2 thunderbolts per click
+      });
+
+      function createThunderbolts(x, y, count) {
+        for (let i = 0; i < count; i++) {
+          // Generate random offset for each thunderbolt
+          const offsetX = Math.random() * 50 - 25; // Offset between -25 and 25
+          const offsetY = Math.random() * 50 - 25; // Offset between -25 and 25
+          createThunderbolt(x + offsetX, y + offsetY);
+        }
+      }
+
+      function createThunderbolt(x, y) {
+        const mainBoltLength = Math.floor(Math.random() * 10) + 20; // Increase the number of segments
+        createBolt(x, y, mainBoltLength);
+      }
+
+      function createBolt(startX, startY, segmentCount) {
+        const svgNS = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("class", "svg-container");
+
+        // Ensure SVG is properly sized
+        svg.setAttribute("width", "100vw");
+        svg.setAttribute("height", "100vh");
+
+        let currentX = startX;
+        let currentY = startY;
+
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("class", "lightning");
+
+        // Randomize thickness based on a realistic approach
+        const baseThickness = 2; // Minimum thickness for the bolt
+        const maxThickness = 8; // Maximum thickness for the bolt
+        const thickness =
+          Math.random() * (maxThickness - baseThickness) + baseThickness;
+
+        path.setAttribute("stroke-width", thickness);
+
+        let d = `M ${currentX} ${currentY} `;
+
+        for (let i = 0; i < segmentCount; i++) {
+          // Randomize segment length and angle
+          const length = Math.random() * 60 + 100; // Increase segment length to 100 to 160px
+          const angle = Math.random() * 360;
+          const randomDisplacement = Math.random() * 30; // Displacement for curving
+
+          const radianAngle = angle * (Math.PI / 180);
+          currentX +=
+            Math.cos(radianAngle) * length +
+            (Math.random() - 0.5) * randomDisplacement;
+          currentY +=
+            Math.sin(radianAngle) * length +
+            (Math.random() - 0.5) * randomDisplacement;
+
+          d += `L ${currentX} ${currentY} `;
+
+          // Add branches at specific intervals
+          if (i === Math.floor(segmentCount / 2)) {
+            createBranch(currentX, currentY, svgNS, svg, 3); // Limit branches to a max depth of 3
+          }
+        }
+
+        path.setAttribute("d", d);
+        svg.appendChild(path);
+        document.body.appendChild(svg);
+
+        // Remove the SVG element after animation
+        setTimeout(() => svg.remove(), 800); // Extended time for the bolt to stay visible
+      }
+
+      function createBranch(startX, startY, svgNS, svg, depth) {
+        if (depth <= 0) return; // Stop recursion if depth is zero
+
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("class", "lightning");
+
+        // Randomize thickness for branches
+        const baseThickness = 1; // Minimum thickness for branches
+        const maxThickness = 5; // Maximum thickness for branches
+        const thickness =
+          Math.random() * (maxThickness - baseThickness) + baseThickness;
+
+        path.setAttribute("stroke-width", thickness);
+
+        let d = `M ${startX} ${startY} `;
+        const branchCount = Math.floor(Math.random() * 3) + 2; // Number of branches
+        const branchLength = Math.floor(Math.random() * 5) + 5; // Branch length between 50 to 100px
+
+        for (let i = 0; i < branchCount; i++) {
+          // Randomize branch segment length and angle
+          const length = Math.random() * 20 + 30; // Length between 30 to 50px
+          const angle = Math.random() * 360;
+          const randomDisplacement = Math.random() * 20; // Displacement for curving
+
+          const radianAngle = angle * (Math.PI / 180);
+          startX +=
+            Math.cos(radianAngle) * length +
+            (Math.random() - 0.5) * randomDisplacement;
+          startY +=
+            Math.sin(radianAngle) * length +
+            (Math.random() - 0.5) * randomDisplacement;
+
+          d += `L ${startX} ${startY} `;
+
+          // Add small random branches
+          if (Math.random() > 0.5) {
+            createBranch(startX, startY, svgNS, svg, depth - 1); // Decrease depth with each recursion
+          }
+        }
+
+        path.setAttribute("d", d);
+        svg.appendChild(path);
+      }
+
+      function generateRandomLightning() {
+        // Generate random positions on the screen
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        // Create multiple thunderbolts at random positions
+        for (let i = 0; i < 2; i++) {
+          // Double the number of lightning bolts
+          const randomX = Math.random() * screenWidth;
+          const randomY = Math.random() * screenHeight;
+
+          createThunderbolt(randomX, randomY);
+        }
+      }
+
+      // Generate random lightning bolts every 1-2.5 seconds
+      setInterval(generateRandomLightning, Math.random() * 2500 + 500); // Interval between 0.5 to 2 seconds
+    </script>
+  </body>
+</html>
