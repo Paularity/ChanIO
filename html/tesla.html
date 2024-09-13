@@ -67,9 +67,27 @@
       </svg>
     </div>
 
+    <!-- Add audio element for the lightning sound -->
+    <audio id="thunderSound" src="https://suixiety.com/dod/sound/ambient/thunder2.wav" preload="auto"></audio>
+
+    <!-- Add a play button to ensure user interaction -->
+    <button id="playSound" style="position: absolute; top: 20px; left: 20px;">Start Sound</button>
+
     <script>
+      const thunderSound = document.getElementById('thunderSound');
+      const playButton = document.getElementById('playSound');
+
+      playButton.addEventListener('click', () => {
+        // Play the sound when the button is clicked
+        thunderSound.play();
+        playButton.style.display = 'none'; // Hide the button after clicking
+      });
+
       document.addEventListener("click", function (e) {
         createThunderbolts(e.pageX, e.pageY, 2); // Create 2 thunderbolts per click
+        if (!playButton.style.display) {
+          thunderSound.play(); // Play sound on click if button is already hidden
+        }
       });
 
       function createThunderbolts(x, y, count) {
@@ -197,6 +215,9 @@
           const randomY = Math.random() * screenHeight;
 
           createThunderbolt(randomX, randomY);
+          if (thunderSound.paused) {
+            thunderSound.play(); // Play sound for each random lightning if not already playing
+          }
         }
       }
 
