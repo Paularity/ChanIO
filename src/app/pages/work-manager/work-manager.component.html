@@ -1,0 +1,264 @@
+<div class="container">
+  <div class="flex flex-column gap-4">
+    <!-- breadcrumbs -->
+    <!-- <div class="flex flex-row justify-content-start align-items-center">
+      <p-breadcrumb class="max-w-full" [model]="breadcrumbItems" />
+    </div> -->
+    <!-- header -->
+    <div
+      class="flex flex-row justify-content-start align-items-center border-bottom-1 border-gray-300"
+    >
+      <h1>Work Manager</h1>
+    </div>
+
+    <!-- grid/table -->
+    <div class="flex flex-row justify-content-center align-items-center">
+      <div class="card">
+        <p-toast />
+        <p-toolbar styleClass="mb-4 gap-2">
+          <ng-template pTemplate="left">
+            <p-button
+              severity="success"
+              label="New"
+              icon="pi pi-plus"
+              class="mr-2"
+              (onClick)="openNew()"
+            />
+            <p-button
+              severity="danger"
+              label="Delete"
+              icon="pi pi-trash"
+              (onClick)="deleteSelectedItems()"
+              [disabled]="!selectedItems || !selectedItems.length"
+            />
+          </ng-template>
+
+          <ng-template pTemplate="right">
+            <div class="flex flex-row gap-3">
+              <p-fileUpload
+                name="file"
+                accept=".json"
+                (onSelect)="onFileSelect($event)"
+                mode="basic"
+                chooseLabel="Select JSON File"
+              ></p-fileUpload>
+              <p-button
+                (click)="exportData()"
+                severity="help"
+                label="Export"
+                icon="pi pi-upload"
+              />
+            </div>
+          </ng-template>
+        </p-toolbar>
+
+        <p-table
+          #dt
+          [value]="gridData"
+          [rows]="pageSize"
+          [paginator]="true"
+          [totalRecords]="totalItems"
+          [tableStyle]="{ 'min-width': '75rem' }"
+          [rowHover]="true"
+          dataKey="id"
+          [expandedRowKeys]="expandedRows"
+          [scrollable]="true"
+          scrollHeight="400px"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [showCurrentPageReport]="true"
+          (onPage)="pageChange($event)"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [lazy]="true"
+        >
+          <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+              <h5 class="m-0">Manage Tasks</h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="dt.filterGlobal($event.target, 'contains')"
+                  placeholder="Search..."
+                />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <!-- <th style="width: 4rem">
+                <p-tableHeaderCheckbox />
+              </th> -->
+              <th style="width: 5rem"></th>
+              <th pSortableColumn="id" style="min-width: 10rem">
+                ID <p-sortIcon field="id" />
+              </th>
+              <th pSortableColumn="date" style="min-width: 10rem">
+                Date <p-sortIcon field="date" />
+              </th>
+              <!-- <th pSortableColumn="fields.title" style="min-width: 10rem">
+                Title <p-sortIcon field="fields.title" />
+              </th>
+              <th pSortableColumn="fields.category" style="min-width: 10rem">
+                Category <p-sortIcon field="fields.category" />
+              </th>
+              <th pSortableColumn="fields.type" style="min-width: 10rem">
+                Type <p-sortIcon field="fields.type" />
+              </th>
+              <th pSortableColumn="fields.status" style="min-width: 10rem">
+                Status <p-sortIcon field="fields.status" />
+              </th> -->
+              <th style="min-width: 10rem">Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-expanded="expanded">
+            <tr>
+              <td>
+                <p-button
+                  type="button"
+                  pRipple
+                  [pRowToggler]="item"
+                  [text]="true"
+                  [rounded]="true"
+                  [plain]="true"
+                  [icon]="
+                    expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
+                  "
+                />
+              </td>
+              <td pFrozenColumn>
+                {{ item.id }}
+              </td>
+              <td pFrozenColumn>
+                {{ item.date | date : "MMM. d, y" }}
+              </td>
+              <!-- <td pFrozenColumn>
+                {{ workitem.fields.title }}
+              </td>
+              <td>
+                {{ workitem.fields.category }}
+              </td>
+              <td>
+                {{ workitem.fields.workitemType }}
+              </td>
+              <td>
+                {{ workitem.fields.status }}
+              </td> -->
+              <td>
+                <p-button
+                  icon="pi pi-pencil"
+                  class="mr-2"
+                  [rounded]="true"
+                  [outlined]="true"
+                  severity="success"
+                  (offClick)="handleEditItem(item)"
+                />
+                <p-button
+                  icon="pi pi-trash"
+                  severity="danger"
+                  [rounded]="true"
+                  [outlined]="true"
+                  (offClick)="deleteItem(item)"
+                />
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-item>
+            <tr>
+              <td colspan="3">
+                <p-table [value]="item.tasks">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>Task/s</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-task>
+                    <tr>
+                      <td>{{ task }}</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-dialog
+          [(visible)]="isCreateEditDialogOpen"
+          [style]="{ width: '450px' }"
+          header="Task Details"
+          [modal]="true"
+          styleClass="p-fluid"
+          [draggable]="false"
+        >
+          <ng-template pTemplate="body">
+            <div class="p-fluid p-5">
+              <form [formGroup]="taskForm" class="flex flex-column gap-3">
+                <!-- ID -->
+                <!-- <div class="p-field">
+                  <label for="id">ID</label>
+                  <input
+                    id="id"
+                    type="text"
+                    pInputText
+                    formControlName="id"
+                    placeholder="Enter task ID"
+                  />
+                </div> -->
+
+                <!-- Date -->
+                <div class="p-field">
+                  <label for="date">Date</label>
+                  <p-calendar
+                    appendTo="body"
+                    id="date"
+                    formControlName="date"
+                    dateFormat="M d, yy"
+                  ></p-calendar>
+                </div>
+
+                <!-- Tasks -->
+                <div class="p-field">
+                  <label for="tasks">Tasks</label>
+                  <p-chips
+                    id="tasks"
+                    formControlName="tasks"
+                    placeholder="Enter tasks"
+                  ></p-chips>
+                </div>
+
+                <!-- TODO -->
+                <div class="p-field">
+                  <label for="todo">To Do</label>
+                  <input
+                    id="todo"
+                    type="text"
+                    pInputText
+                    formControlName="todo"
+                    placeholder="Enter to-do description"
+                  />
+                </div>
+              </form>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+            <p-button
+              label="Cancel"
+              icon="pi pi-times"
+              [text]="true"
+              (onClick)="hideDialog()"
+            />
+            <p-button
+              label="Save"
+              icon="pi pi-check"
+              [text]="true"
+              (onClick)="onFormSubmit()"
+            />
+          </ng-template>
+        </p-dialog>
+
+        <p-confirmDialog [style]="{ width: '450px' }" />
+      </div>
+    </div>
+  </div>
+</div>

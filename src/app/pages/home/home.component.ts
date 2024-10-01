@@ -4,17 +4,19 @@ import { Router } from '@angular/router';
 import { PrimengModules } from '../../modules/primeng-modules';
 import { TerminalService } from 'primeng/terminal';
 import { Subscription } from 'rxjs';
+import { WorkManagerComponent } from "../work-manager/work-manager.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [PrimengModules],
+  imports: [PrimengModules, WorkManagerComponent],
   providers: [TerminalService],
   standalone: true,
 })
 export class HomeComponent implements OnInit, OnDestroy {
   displayWhoAmI = false;
+  displayWorkManager = false;
   subs: Subscription[] = [];
 
   constructor(
@@ -38,7 +40,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   showWhoAmI() {
     this.displayWhoAmI = true;
   }
-
+  showWorkManager() {
+    this.displayWorkManager = true;
+  }
   commandHandler(text: any) {
     let response;
     let argsIndex = text.indexOf(' ');
@@ -50,20 +54,18 @@ export class HomeComponent implements OnInit, OnDestroy {
           'Hello there! my name is Christian Decembrana (Frontend Developer)';
         break;
 
-        case 'secrets':
-          response =
-            'I love ************ *** *** ***';
-          break;
+      case 'secrets':
+        response = 'I love ************ *** *** ***';
+        break;
 
-          case 'hobbies':
-          response =
-            'Playing Basketball, Guitar, & Video Games... especially Coding </>';
-          break;
+      case 'hobbies':
+        response =
+          'Playing Basketball, Guitar, & Video Games... especially Coding </>';
+        break;
 
-          case 'motto':
-          response =
-            'Sasageyo!!! sasageyooooooooooo!';
-          break;
+      case 'motto':
+        response = 'Sasageyo!!! sasageyooooooooooo!';
+        break;
 
       default:
         response = 'Unknown command: ' + command;
